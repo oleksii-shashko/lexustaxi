@@ -1,0 +1,1 @@
+web:gunicorn lexussite.wsgi --log-file -
