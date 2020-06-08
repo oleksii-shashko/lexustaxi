@@ -5,8 +5,8 @@ from django.http import HttpResponseRedirect, HttpResponse
 from index.models import *
 
 
-
-import mimetypes, os
+import mimetypes
+import os
 from django.conf import settings
 import pdfkit
 from wsgiref.util import FileWrapper
@@ -14,13 +14,14 @@ from .forms import *
 
 
 def index(request):
-    if 'id_client' not in request.session:
+
+    if 'roll' not in request.session:
         return HttpResponseRedirect('/')
 
     Request = apps.get_model('index', 'Request')
 
     if "_logout" in request.POST:
-        del request.session['id_client']
+        del request.session['roll']
         return HttpResponseRedirect('/')
 
     if request.POST:

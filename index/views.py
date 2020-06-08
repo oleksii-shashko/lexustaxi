@@ -5,6 +5,12 @@ from .forms import AuthForm, RegForm
 
 
 def index(request):
+
+    if "name" in request.session:
+        return HttpResponseRedirect('/authorized/')
+    if "roll" in request.session:
+        return HttpResponseRedirect('/manager/')
+
     cars = Car.objects.all()
 
     form_auth = AuthForm()
@@ -28,8 +34,7 @@ def index(request):
             request.session['id_client'] = client.id
             return HttpResponseRedirect('/authorized/')
         elif roll == 'a':
-            client = Client.objects.get(login=request.POST.get("login"))
-            request.session['id_client'] = client.id
+            request.session['roll'] = roll
             return HttpResponseRedirect('/manager/')
         locker = 2
     elif not request.POST.getlist("phone_number", -1) == -1 and not request.POST.getlist("login", -1) == -1:
