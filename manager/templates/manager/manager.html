@@ -1,0 +1,235 @@
+{% extends "index/wrapper.html" %}
+
+{% block content %}
+
+    {% load staticfiles %}
+
+    <nav class="navbar navbar-expand-lg navbar-light p-1">
+
+        <a href="/manager/" class="navbar-brand col-3 nb">LexusTaxi</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="nav flex-nowrap col-6 justify-content-end d-flex  navbar ml-auto p-0 m-0">
+                <li class="nav-item nav-link active" data-toggle="modal" data-target="#logoutModal">
+                    <form action="" method="post"> {% csrf_token %}
+                        <button class="nav-link btn text-dark" name="_logout">Выйти</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <style>
+        .errorlist{
+            display: none !important;
+        }
+        form > input {
+            margin: 0 .6rem;
+        }
+
+        form > button {
+            border: 1px solid #0066cc;
+            background-color: #0099cc;
+            color: #ffffff;
+            padding: 5px 10px;
+        }
+
+        form  button:hover {
+            border: 1px solid #0099cc;
+            background-color: #00aacc;
+            color: #ffffff;
+            padding: 5px 10px;
+        }
+
+        form  button:disabled,
+        form  button:focus,
+        form  button[disabled] {
+            border: 1px solid #999999;
+            background-color: #cccccc;
+            color: #666666;
+            outline: none !important;
+        }
+    </style>
+
+    <div class="container-fluid">
+        <ul class="nav nav-pills  mt-3 mb-1">
+            <li><a data-toggle="pill" href="#pill_new">Новые</a></li>
+            <li><a data-toggle="pill" href="#pill_no_new">Отклонённые</a></li>
+            <li><a data-toggle="pill" href="#pill_success">Подтверждённые</a></li>
+            <li><a data-toggle="pill" href="#pill_all">Все</a></li>
+            <li class="ml-auto">
+                <form method="post" class="d-flex align-items-center h-100 text-white px-2">
+                    {#                    <label class="d-flex m-0 mx-1"><span>Начало:</span> <input type="date" class="mx-1"></label>#}
+                    {#                    <label class="d-flex m-0 mx-1">Конец: <input type="date" class="mx-1"></label>#}
+                    {% csrf_token %}
+                    {{ form }}
+            <li class="">
+                <button type="submit" class="h-100 w-100 text-white" style="border: none; background: none">Отчет
+                </button>
+                </form>
+
+            </li>
+            </li>
+
+            <li class=""><a href="/manager/"><i class="fa fa-refresh" aria-hidden="true"></i></a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div id="pill_new" class="tab-pane fade in active">
+                <table class="table table-bordered bg-light table-hover">
+
+                    <thead class="thead-dark">
+                    <tr>
+                        <th id="t1">Телефон</th>
+                        <th id="t2">Имя</th>
+                        <th id="t3">Откуда</th>
+                        <th id="t4">Куда</th>
+                        <th id="t5">Класс</th>
+                        <th id="t6">Цена</th>
+                        <th id="t7">Статус</th>
+                        <th id="t8">Коментарий</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for order in all_new %}
+                        <tr>
+                            <td>{{ order.client.phone_number }}</td>
+                            <td>{{ order.client.name }}</td>
+                            <td>{{ order.distance.from_address }}</td>
+                            <td>{{ order.distance.to_address }}</td>
+                            <td>{{ order.car.name }}</td>
+                            <td>{{ order.total }}₴</td>
+                            <td class="align-middle">
+                                <form action="" method="post"> {% csrf_token %}
+                                    <button type="submit" value="{{ order.id }}" name="_reject"
+                                            class="btn check-btn btn-reject">Отклонить
+                                    </button>
+                                    <button type="submit" value="{{ order.id }}" name="_accept"
+                                            class="btn check-btn btn-accept">Принять
+                                    </button>
+                                </form>
+                            </td>
+                            <td class="table_td">{{ order.comment }}</td>
+                        </tr>
+                    {% endfor %}
+
+
+                    </tbody>
+
+                </table>
+            </div>
+            <div id="pill_no_new" class="tab-pane fade">
+                <table class="table table-bordered bg-light table-hover">
+
+                    <thead class="thead-dark">
+                    <tr>
+                        <th id="t1">Телефон</th>
+                        <th id="t2">Имя</th>
+                        <th id="t3">Откуда</th>
+                        <th id="t4">Куда</th>
+                        <th id="t5">Класс</th>
+                        <th id="t6">Цена</th>
+                        <th id="t8">Коментарий</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+
+                    {% for order in all_rejected %}
+                        <tr class="table-danger">
+                            <td>{{ order.client.phone_number }}</td>
+                            <td>{{ order.client.name }}</td>
+                            <td>{{ order.distance.from_address }}</td>
+                            <td>{{ order.distance.to_address }}</td>
+                            <td>{{ order.car.name }}</td>
+                            <td>{{ order.total }}₴</td>
+                            <td class="table_td">{{ order.comment }}</td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+            </div>
+            <div id="pill_success" class="tab-pane fade">
+                <table class="table table-bordered bg-light table-hover">
+
+                    <thead class="thead-dark">
+                    <tr>
+                        <th id="t1">Телефон</th>
+                        <th id="t2">Имя</th>
+                        <th id="t3">Откуда</th>
+                        <th id="t4">Куда</th>
+                        <th id="t5">Класс</th>
+                        <th id="t6">Цена</th>
+                        <th id="t8">Коментарий</th>
+
+                    </tr>
+                    </thead>
+
+                    <tbody>
+
+                    {% for order in all_accepted %}
+                        <tr class="table-success">
+                            <td>{{ order.client.phone_number }}</td>
+                            <td>{{ order.client.name }}</td>
+                            <td>{{ order.distance.from_address }}</td>
+                            <td>{{ order.distance.to_address }}</td>
+                            <td>{{ order.car.name }}</td>
+                            <td>{{ order.total }}₴</td>
+                            <td class="table_td">{{ order.comment }}</td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+            </div>
+            <div id="pill_all" class="tab-pane fade">
+                <table class="table table-bordered bg-light table-hover">
+
+                    <thead class="thead-dark">
+                    <tr>
+                        <th id="t1">Телефон</th>
+                        <th id="t2">Имя</th>
+                        <th id="t3">Откуда</th>
+                        <th id="t4">Куда</th>
+                        <th id="t5">Класс</th>
+                        <th id="t6">Цена</th>
+                        <th id="t8">Коментарий</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for order in all %}
+                        {% if order.status == 'a' %}
+                            <tr class="table-success">
+                                {% elif order.status == 'r' %}
+                            <tr class="table-danger">
+                                {% else %}
+                            <tr>
+                        {% endif %}
+                    <td>{{ order.client.phone_number }}</td>
+                    <td>{{ order.client.name }}</td>
+                    <td>{{ order.distance.from_address }}</td>
+                    <td>{{ order.distance.to_address }}</td>
+                    <td>{{ order.car.name }}</td>
+                    <td>{{ order.total }}₴</td>
+                    <td class="table_td">{{ order.comment }}</td>
+                    </tr>
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

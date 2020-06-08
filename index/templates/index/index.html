@@ -1,0 +1,105 @@
+{% extends "index/wrapper.html" %}
+
+{% block content %}
+
+{% load staticfiles %}
+
+
+    <nav class="navbar navbar-expand-lg navbar-light p-1">
+
+        <a href="/" class="navbar-brand col-3 nb">LexusTaxi</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="nav flex-nowrap col-6 justify-content-end d-flex  navbar ml-auto p-0 m-0">
+                <li class="nav-item nav-link active" data-toggle="modal" data-target="#loginModal">
+                    <a href="#" class="nav-link btn text-dark">Войти</a>
+                </li>
+                <li class="nav-item nav-link" data-toggle="modal" data-target="#regModal">
+                    <a href="#" class="nav-link btn text-dark">Регистрация</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+
+    <!-- Форма для входа на сайта -->
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class=" modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Вход</h5>
+                    <button type="button" class="close " data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="post"> {% csrf_token %}
+
+                        <div class="form-floup">
+                            {{ form_auth }}
+                        </div>
+                        <div class="modal-footer d-flex justify-content-center">
+                            <button type="submit" class="btn">Вход</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Форма для регистрации на сайте -->
+    <div class="modal fade" id="regModal" tabindex="-1" role="dialog" aria-labelledby="regModalLabel" aria-hidden="true">
+        <div class=" modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="regModalLabel">Регистрация</h5>
+                    <button type="button" class="close " data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <form action="" method="post"> {% csrf_token %}
+
+                        <div class="form-floup">
+                            {{ form_reg }}
+                        </div>
+
+                        <div class="modal-footer d-flex justify-content-center">
+                            <button type="submit" class="btn">Регистрация</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="row gbox">
+        <div class="col-2"></div>
+        <div class="col-8 text-white loz">Заказывай<br>LexusTaxi</div>
+
+        <div class="gbox gbox2 mt-5">
+
+        {% for car in cars_list %}
+            <form action="" class="taxi_box taxi_box_1">
+                <div>{{ car.name }}</div>
+                <img src={{ car.img_url }} alt="">
+                <p>Стоимость: {{ car.coast_per_km }}₴</p>
+                <button class="btn mb-3" data-toggle="modal" data-target="#regModal" name="_invalid_order">Заказать</button>
+            </form>
+        {% endfor %}
+
+        </div>
+    </div>
+
+{% endblock %}

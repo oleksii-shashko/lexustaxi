@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>LexusTaxi</title>
+
+    {% load staticfiles %}
+
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/jquery.maskedinput.min.js' %}"></script>
+
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'index/style/index.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'manager/style/manager.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'authorized/style/authorized.css' %}" type="text/css">
+
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"/>
+
+    <script>
+        $(document).ready(function() {
+            $(".phone").mask("+38 (999) 99-99-999");
+            if( {{ reload }} == 2)
+            {
+                $("#loginModal").modal('show');
+            }
+            if( {{ reload }} == 1)
+            {
+                $("#regModal").modal('show');
+            }
+            if( {{ reload }} == 3)
+            {
+                $("#orderModal").modal('show');
+            }
+        });
+    </script>
+</head>
+<body style="background-image: url({% static 'bg/bgtaxi.png'%});">
+    {% block content %}         {% endblock %}
+</body>
+</html>

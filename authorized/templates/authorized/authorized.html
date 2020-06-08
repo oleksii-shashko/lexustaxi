@@ -1,0 +1,128 @@
+{% extends "index/wrapper.html" %}
+
+{% block content %}
+
+{% load staticfiles %}
+
+    <nav class="navbar navbar-expand-lg navbar-light p-1">
+
+        <a href="/authorized/" class="navbar-brand col-3 nb">LexusTaxi</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="nav flex-nowrap col-6 justify-content-end d-flex  navbar ml-auto p-0 m-0">
+                <li class="nav-item nav-link active" data-toggle="modal" data-target="#orderModal">
+                    <a href="#" class="nav-link btn text-dark">Заказать</a>
+                </li>
+                <li class="nav-item nav-link active" data-toggle="modal" data-target="#cabinet">
+                    <a href="#" class="nav-link btn text-dark account d-flex align-items-center"><i class="fa fa-2x fa-user-o" aria-hidden="true"></i>
+                    </a>
+                </li>
+                <li class="nav-item nav-link active" data-toggle="modal" data-target="#logoutModal">
+                    <form action="" method="post"> {% csrf_token %}
+                        <button class="nav-link btn text-dark" name="_logout">Выйти</button>
+                    </form>
+                 </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!--Кабинет-->
+    <div class="modal fade bd-example-modal-lg" id="cabinet" tabindex="-1" role="dialog" aria-labelledby="cabinet" aria-hidden="true">
+        <div class=" modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Личный кабинет</h5>
+                    <button type="button" class="close " data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="cabinet_info">
+                        <div class= "text-info">Ваше имя:</div> <span class="text-dark" id="cabinetName">{{ client.name }}</span>
+                        <div class= "text-info">Ваш телефон:</div><span class="text-dark" id="cabinetName">{{ client.phone_number }}</span>
+                    </div>
+
+                    <table class="table table-bordered bg-light table-hover mt-5 cabinetInfo">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th id="t3">Откуда</th>
+                                <th id="t4">Куда</th>
+                                <th id="t5">Класс</th>
+                                <th id="t6">Цена</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                        {% for order in all_orders %}
+                            {% if order.status == 'a'%}
+                                <tr class="table-success">
+                            {% elif order.status == 'r'%}
+                                <tr class="table-danger">
+                            {% else %}
+                                <tr>
+                            {% endif %}
+                                <td>{{ order.distance.from_address }}</td>
+                                <td>{{ order.distance.to_address }}</td>
+                                <td>{{ order.car.name }}</td>
+                                <td>{{ order.total }}₴</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Форма для заказа такси -->
+    <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class=" modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Заказ</h5>
+                    <button type="button" class="close " data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <form action="" method="post">{% csrf_token %}
+
+                        <div class="form-group">
+                            {{ form }}
+                        </div>
+
+                        <div class="modal-footer d-flex justify-content-center">
+                            <button type="submit" class="btn">Заказать</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row gbox">
+        <div class="col-2"></div>
+        <div class="col-8 text-white loz mt-5 pt-5 ">Заказывай<br>LexusTaxi</div>
+    </div>
+
+    <div class="gbox gbox2">
+
+        {% for car in cars_list %}
+            <form action="" class="taxi_box taxi_box_1" method="post"> {% csrf_token %}
+                <div>{{ car.name }}</div>
+                <img src={{ car.img_url }} alt="">
+                <p>Стоимость: {{ car.coast_per_km }}₴</p>
+                <button class="btn mb-3" data-toggle="modal" data-target="#orderModal" value="{{ car.id }}" name="_car_order">Заказать</button>
+            </form>
+        {% endfor %}
+
+    </div>
+
+{% endblock %}

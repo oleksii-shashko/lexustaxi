@@ -1,0 +1,101 @@
+
+
+.loz {
+    font-size: 60px;
+    text-shadow: 10px 5px 10px black;
+    font-family: calibri;
+}
+
+.gbox {
+    height: 800px;
+    width: 100%;
+}
+
+.gbox2{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+
+.taxi_box{
+    height: 300px;
+    width: 300px;
+    background-color: RGB(176,196,222, 0.1);
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    border: 1px solid RGB(176,196,222, 0.8);
+    border-radius: 1000px;
+}
+
+.taxi_box p{
+    font-family: cursive;
+    background-color: RGB(49,68,95,0.4);
+    color: azure;
+    width: 150px;
+    text-align: center;
+    border-radius: 50px;
+}
+
+.taxi_box div{
+    font-size: 25px;
+    margin: 20px 0 0 0;
+    color: azure;
+    font-family: cursive;
+    background-color: RGB(49,68,95,0.4);
+    width: 150px;
+    text-align: center;
+    border-radius: 50px;
+}
+
+.taxi_box img{
+    height: 30%;
+    width: 80%;
+}
+
+.taxi_box button:hover{
+    background-color: darkorange;
+}
+
+.taxi_box:hover{
+    background-color:RGB(176,196,222, 0.5);
+    color: orangered;
+}
+
+form label{
+    width: 100% !important;
+}
+
+.vertical-alignment-helper {
+	display:table;
+	height: 100%;
+	width: 100%;
+	pointer-events:none;
+}
+.vertical-align-center {
+	display: table-cell;
+	vertical-align: middle;
+	pointer-events:none;
+}
+.modal-content {
+	height:inherit;
+	margin: 0 auto;
+	pointer-events: all;
+}
+.gbox{
+	margin-top: 200px !important;
+}
+
+.ebyrek{
+    margin-bottom: 16px;
+    color: #fff !important;
+    background-color: #dc3545 !important;
+    font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    padding: 0.1em;
+}

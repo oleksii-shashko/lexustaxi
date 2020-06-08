@@ -1,0 +1,82 @@
+/*header*/
+
+{% load staticfiles %}
+
+@font-face {
+    font-family: Algerian;
+    src: url({% static 'fonts/Algerian.TTF' %});
+    font-weight: normal;
+    font-style: normal;
+    /*security.fileuri.strict_origin_policy,*/
+}
+
+
+nav {
+    background-color: RGB(33, 53, 80, 0.79);
+}
+
+.nb {
+    font-family: Algerian;
+    text-shadow: 15px 10px 12px RGB(33, 53, 80);
+    font-size: 40px;
+    color: black !important;
+}
+/*    !important - приоритет стилей*/
+.nb:hover{
+    color: black;
+}
+
+/**/
+
+
+
+/*body*/
+
+body {
+    background-attachment: fixed;
+    background-size: cover;
+}
+/**/
+
+
+
+/*Кнопки*/
+
+
+.btn {
+    color: black;
+    background-color: #FCE000;
+    border-radius: 50px;
+
+    width: 150px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/**/
+
+
+/*Модальные окна*/
+
+.modal {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+
+}
+/**/
+
+.errorlist{
+	color: #721c24 !important;
+    background-color: #f8d7da  !important;
+    border-color: #f5c6cb !important;
+    position: relative !important;
+    padding: .75rem 1.25rem !important;
+    margin-bottom: 1rem !important;
+    border: 1px solid transparent !important;
+    border-radius: 50px !important;
+    list-style-type: none !important;
+}
